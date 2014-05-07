@@ -73,7 +73,9 @@ napa.url = function(url) {
 
 napa.cmd = function(repo) {
   var outpath = path.join(cwd, 'node_modules', repo[1])
-  if (repo[0].slice(0, 6) === 'git://') {
+  if (repo[0].slice(0, 6) === 'git://' || 
+      repo[0].slice(0, 11) === 'git+http://') {
+    repo[0] = repo[0].replace('git+http://', 'http://')
     return ['git', 'clone', '--depth', '1', repo[0], outpath]
   } else {
     if (repo[0].indexOf('github.com') !== -1 && repo[0].indexOf('/archive/') === -1) {
